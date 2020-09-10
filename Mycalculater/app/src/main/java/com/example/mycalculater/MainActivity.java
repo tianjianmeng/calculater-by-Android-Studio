@@ -1,56 +1,372 @@
 package com.example.mycalculater;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import java.util.Stack;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+    //堆栈的设置
+    Stack<Double> StackNum = new Stack<Double>();//数栈
+    Stack<Character> StackSym = new Stack<Character>();//符号栈
+    TextView show1, show2;
+    String s = "";//总的计算表达式
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            show1 = findViewById(R.id.text1);
+            show2 = findViewById(R.id.text2);
+            Button butEqual = findViewById(R.id.buttonEqual);//等于号
+            butEqual.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Pattern patternInt = Pattern.compile("^[-\\+]?[\\d]*$");
+                    Pattern patternDou = Pattern.compile("^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$");
+                    s = show2.getText().toString();//获取总运算表达式
+                    if(patternDou.matcher(s).matches() || patternInt.matcher(s).matches() || s.equals("") || s.equals(")") || s.substring(s.length()-1).equals("-") || s.substring(s.length()-1).equals("+") || s.substring(s.length()-1).equals("/") || s.substring(s.length()-1).equals("*") || s.substring(s.length()-1).equals(".") || s.substring(s.length()-1).equals("(")){
+                        show2.setText("");
+                    } else {//否则开始运算，其实应该再检查运算表达式是否合法
+                        s += "=";
+                        show1.setText(s);
+                        double r = calculate(s);//开始计算
+                        String ru = "" + r;//将double转换为字符串
+                        show2.setText(ru);//显示结果
+                    }
+                }
+            });
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+            Button butClear = findViewById(R.id.buttonClear);//清空
+            butClear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show1.setText("");
+                    show2.setText("");
+                }
+            });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            Button butMinus = findViewById(R.id.buttonMinus);//减法
+            butMinus.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    show2.append("-");
+                }
+            });
+            Button butPlus = findViewById(R.id.buttonPlus);//加法
+            butPlus.setOnClickListener(new View.OnClickListener() {
+                 public void onClick(View v) {
+                       show2.append("+");
+                 }
+            });
+            Button butMul = findViewById(R.id.buttonMul);//乘法
+            butMul.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    show2.append("*");
+                }
+            });
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            Button butDiv = findViewById(R.id.buttonDiv);//除法
+            butDiv.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    show2.append("/");
+                }
+            });
+
+            Button butPoint = findViewById(R.id.buttonPoint);//小数点
+            butPoint.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    show2.append(".");
+                }
+            });
+            Button butLeft = findViewById(R.id.buttonLeft);//左括号
+            butLeft.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                        show2.append("(");
+                }
+            });
+            Button butRight = findViewById(R.id.buttonRight);//右括号
+            butRight.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                        show2.append(")");
+                }
+            });
+            //数字0-9
+            Button butZero = findViewById(R.id.buttonZero);
+            butZero.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("0");
+                }
+            });
+
+            Button butOne = findViewById(R.id.buttonOne);
+            butOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("1");
+                }
+            });
+
+            Button butTwo = findViewById(R.id.buttonTwo);
+            butTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("2");
+                }
+            });
+
+            Button butThree = findViewById(R.id.buttonThree);
+            butThree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("3");
+                }
+            });
+
+            Button butFour = findViewById(R.id.buttonFour);
+            butFour.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("4");
+                }
+            });
+
+            Button butFive = findViewById(R.id.buttonFive);
+            butFive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("5");
+                }
+            });
+
+
+            Button butSix = findViewById(R.id.buttonSix);
+            butSix.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("6");
+                }
+            });
+
+            Button butSeven = findViewById(R.id.buttonSeven);
+            butSeven.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("7");
+                }
+            });
+
+            Button butEight = findViewById(R.id.buttonEight);
+            butEight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("8");
+                }
+            });
+
+            Button butNine = findViewById(R.id.buttonNine);
+            butNine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    show2.append("9");
+                }
+            });
+
+
+
+            Button butDelete = findViewById(R.id.buttonDelete);//删除
+            butDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String s = show2.getText().toString();
+                    if(s.equals("")){
+                        show2.setText("");
+                    }else {
+                        s = s.substring(0, s.length() - 1);
+                        show2.setText(s);
+                    }
+                }
+            });
+            Button butFang = findViewById(R.id.buttonFang);//平方
+            butFang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String s = show2.getText().toString();
+                    if(s.equals("") || s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("(") || s.equals(")") || s.equals(".")){
+                        show2.setText("");
+                    }else {
+                        show1.setText(s + "^2=");
+
+                        double r = Double.parseDouble(s);
+                        r *= r;
+
+                        String ru = "" + r;
+                        show2.setText(ru);
+                    }
+                }
+            });
+            Button butGen = findViewById(R.id.buttonGen);//开根号
+            butGen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String s = show2.getText().toString();
+                    if(s.equals("") || s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("(") || s.equals(")") || s.equals(".")){
+                        show2.setText("");
+                    }else {
+                        show1.setText("√" + s + "=");
+                        double r = Double.parseDouble(s);
+                        r = Math.sqrt(r);
+                        String ru = "" + r;
+                        show2.setText(ru);
+                    }
+                }
+            });
+            Button butPai = findViewById(R.id.buttonPai);//π
+            butPai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    s = show2.getText().toString();
+                    show2.setText(s + "3.14159");
+                }
+            });
+            Button butE = findViewById(R.id.buttonE);//e
+            butE.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    s = show2.getText().toString();
+                    show2.setText(s + "2.718");
+                }
+            });
+            Button butHelp = findViewById(R.id.buttonHelp);//help
+            butHelp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final View viewDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.help, null, false);
+                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("help").setView(viewDialog).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) { }
+                        TextView TextView=viewDialog.findViewById(R.id.textViewHelp);
+                    });
+                    builder.create().show();
+                }
+            });
         }
 
-        return super.onOptionsItemSelected(item);
+    //计算函数
+    public double calculate(String formula) {
+
+        char CurrentOperator;
+        int ct = 0;
+        double x = 0, y = 0,number = 0;
+        String dp = "";
+        StackSym.push('#');
+        char c = formula.charAt(ct++);//从运算表达式读入一个字符
+        while (c != '=') {//如果不是等于号
+            //如果当前字符不是操作运算符，即是数字
+            if (c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=') {
+                while (c == '.' || (c >= '0' && c <= '9')) {//如果是数字或者小数点，那么一直读取，并存取到dp里面
+                    dp += c;
+                    c = formula.charAt(ct++);
+                }
+                number = Double.parseDouble(dp);//将dp转化为double类型
+                dp = "";
+                StackNum.push(number);//将该数入栈
+            } else {
+                //如果是操作运算符，那么判断优先级后进行操作，
+                //当前运算符优先级级小于上一个运算符优先级，将当前运算符入栈
+                //当前运算符优先级级等于上一个运算符优先级，即（）那么直接删除）
+                //当前运算符优先级级大于上一个运算符优先级，取得数栈的前两个数，并与当前运算符进行运算，后将结果入数栈
+                switch (Judge(StackSym.peek(), c)) {
+                    case -1:
+                        StackSym.push(c);
+                        c = formula.charAt(ct++);
+                        break;
+                    case 0:
+                        StackSym.pop();
+                        c = formula.charAt(ct++);
+                        break;
+                    case 1:
+                        CurrentOperator = StackSym.pop();
+                        y = StackNum.pop();
+                        x = StackNum.pop();
+                        StackNum.push(Operate(x, y, CurrentOperator));
+                        break;
+                }
+            }
+        }
+        //如果是=，那么会直接退出，所以还需要进行一次运算，才能得出最后结果
+        CurrentOperator = StackSym.pop();
+        y = StackNum.pop();
+        x = StackNum.pop();
+        StackNum.push(Operate(x, y, CurrentOperator));
+        double result = StackNum.peek();
+        StackNum.clear();
+        StackSym.clear();
+        return result;
+    }
+    //判断优先级
+    private int Judge(char a, char b) {
+        int c = 0;
+        switch (a) {
+            case '+':
+            case '-':
+                if (b == '*' || b == '/' || b == '(')
+                    c = -1;
+                else
+                    c = 1;
+                break;
+
+            case '*':
+            case '/':
+                if (b == '(')
+                    c = -1;
+                else
+                    c = 1;
+                break;
+
+            case '(':
+                if (b == ')')
+                    c = 0;
+                else
+                    c = -1;
+                break;
+            case ')':
+                c = 1;
+                break;
+            case '#':
+                if (b == '#')
+                    c = 0;
+                else
+                    c = -1;
+                break;
+        }
+        return c;
+    }
+    //根据运算符进行运算
+    private double Operate(double x, double y, char c) {
+        double z = 0;
+        switch (c) {
+            case '+':
+                z = x + y;
+                break;
+            case '-':
+                z = x - y;
+                break;
+            case '*':
+                z = x * y;
+                break;
+            case '/':
+                z = x / y;
+                break;
+        }
+        return z;
     }
 }
