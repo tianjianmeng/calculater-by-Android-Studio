@@ -2,10 +2,13 @@ package com.example.mycalculater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Stack;
@@ -29,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
             butEqual.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Pattern patternInt = Pattern.compile("^[-\\+]?[\\d]*$");
-                    Pattern patternDou = Pattern.compile("^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$");
+
                     s = show2.getText().toString();//获取总运算表达式
-                    if(patternDou.matcher(s).matches() || patternInt.matcher(s).matches() || s.equals("") || s.equals(")") || s.substring(s.length()-1).equals("-") || s.substring(s.length()-1).equals("+") || s.substring(s.length()-1).equals("/") || s.substring(s.length()-1).equals("*") || s.substring(s.length()-1).equals(".") || s.substring(s.length()-1).equals("(")){
-                        show2.setText("");
-                    } else {//否则开始运算，其实应该再检查运算表达式是否合法
+                    try{
                         s += "=";
                         show1.setText(s);
                         double r = calculate(s);//开始计算
                         String ru = "" + r;//将double转换为字符串
                         show2.setText(ru);//显示结果
-                    }
+                    }catch(Exception e){
+                        show2.setText("");
+                        Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+                }
                 }
             });
 
@@ -199,9 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String s = show2.getText().toString();
-                    if(s.equals("") || s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("(") || s.equals(")") || s.equals(".")){
-                        show2.setText("");
-                    }else {
+                    try {
                         show1.setText(s + "^2=");
 
                         double r = Double.parseDouble(s);
@@ -209,22 +210,27 @@ public class MainActivity extends AppCompatActivity {
 
                         String ru = "" + r;
                         show2.setText(ru);
+                    }catch(Exception e){
+                        show2.setText("");
+                        Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
                     }
                 }
+
             });
             Button butGen = findViewById(R.id.buttonGen);//开根号
             butGen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String s = show2.getText().toString();
-                    if(s.equals("") || s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/") || s.equals("(") || s.equals(")") || s.equals(".")){
+                    try {
+                            show1.setText("√" + s + "=");
+                            double r = Double.parseDouble(s);
+                            r = Math.sqrt(r);
+                            String ru = "" + r;
+                            show2.setText(ru);
+                    }catch(Exception e){
                         show2.setText("");
-                    }else {
-                        show1.setText("√" + s + "=");
-                        double r = Double.parseDouble(s);
-                        r = Math.sqrt(r);
-                        String ru = "" + r;
-                        show2.setText(ru);
+                        Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
                     }
                 }
             });
