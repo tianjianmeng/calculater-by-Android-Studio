@@ -61,14 +61,22 @@
             android:textSize="30sp" />
 
         <Button
+            android:id="@+id/buttonCos"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Cos"
+            android:textSize="16sp" />
+
+        <Button
             android:id="@+id/buttonClear"
-            android:layout_width="81dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="C"
             android:textSize="30sp" />
-
 
     </LinearLayout>
 
@@ -105,8 +113,17 @@
             android:textSize="30sp" />
 
         <Button
+            android:id="@+id/buttonSin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Sin"
+            android:textSize="16sp" />
+
+        <Button
             android:id="@+id/buttonDelete"
-            android:layout_width="81dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"

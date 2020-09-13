@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
                         s += "=";
                         show1.setText(s);
                         double r = calculate(s);//开始计算
-                        String ru = "" + r;//将double转换为字符串
+                        String ru = "";
+                        ru=String.format("%.12f",r);
                         show2.setText(ru);//显示结果
                     }catch(Exception e){
                         show2.setText("");
@@ -207,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
 
                         double r = Double.parseDouble(s);
                         r *= r;
-
-                        String ru = "" + r;
+                        String ru = "";
+                        ru=String.format("%.12f",r);
                         show2.setText(ru);
                     }catch(Exception e){
                         show2.setText("");
@@ -226,7 +227,8 @@ public class MainActivity extends AppCompatActivity {
                             show1.setText("√" + s + "=");
                             double r = Double.parseDouble(s);
                             r = Math.sqrt(r);
-                            String ru = "" + r;
+                            String ru = "";
+                            ru=String.format("%.12f",r);
                             show2.setText(ru);
                     }catch(Exception e){
                         show2.setText("");
@@ -310,6 +312,44 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Button butSin = findViewById(R.id.buttonSin);//sin函数
+        butSin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            try{
+                s = show2.getText().toString();
+                show1.setText("sin " + s + "=");
+
+                double r = Double.parseDouble(s);
+                r = Math.sin(r);
+                String ru = "";
+                ru=String.format("%.12f",r);
+                show2.setText(ru);
+            }catch(Exception e){
+                show2.setText("");
+                Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+            }
+            }
+        });
+        Button butCos = findViewById(R.id.buttonCos);//cos函数
+        butCos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            try{
+                s = show2.getText().toString();
+                show1.setText("cos " + s + "=");
+
+                double r = Double.parseDouble(s);
+                r = Math.cos(r);
+                String ru = "";
+                ru=String.format("%.12f",r);
+                show2.setText(ru);
+            }catch(Exception e){
+                show2.setText("");
+                Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+            }
+            }
+        });
         }
 
     //计算函数
@@ -362,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
         double result = StackNum.peek();
         StackNum.clear();
         StackSym.clear();
+
         return result;
     }
     //判断优先级
