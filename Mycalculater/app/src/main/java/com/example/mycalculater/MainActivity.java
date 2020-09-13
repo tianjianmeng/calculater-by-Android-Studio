@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     }catch(Exception e){
                         show2.setText("");
                         Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
-                }
+                    }
                 }
             });
 
@@ -264,6 +264,52 @@ public class MainActivity extends AppCompatActivity {
                     builder.create().show();
                 }
             });
+        Button butHex = findViewById(R.id.buttonHex);//十六进制
+        butHex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    s = show2.getText().toString();
+                    show1.setText("HEX(" + s + ")=");
+                    int r = Integer.valueOf(s).intValue();
+                    show2.setText(Integer.toHexString(r));
+                }catch(Exception e){
+                    show2.setText("");
+                    Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        Button butOct = findViewById(R.id.buttonOct);//八进制
+        butOct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    s = show2.getText().toString();
+                    show1.setText("OCT(" + s + ")=");
+                    int r = Integer.valueOf(s).intValue();
+                    show2.setText(Integer.toOctalString(r));
+                    }catch(Exception e){
+                        show2.setText("");
+                        Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+                    }
+            }
+        });
+        Button butBin = findViewById(R.id.buttonBin);//二进制
+        butBin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    s = show2.getText().toString();
+                    show1.setText("BIN(" + s + ")=");
+                    int r = Integer.valueOf(s).intValue();
+                    show2.setText(Integer.toBinaryString(r));
+                }catch(Exception e){
+                    show2.setText("");
+                    Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         }
 
     //计算函数
