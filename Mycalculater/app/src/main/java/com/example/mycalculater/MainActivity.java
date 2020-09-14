@@ -256,13 +256,20 @@ public class MainActivity extends AppCompatActivity {
             butHelp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    final String[] s={"quit","yes"};
+                    boolean []b={false,false};
                     final View viewDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.help, null, false);
                     AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("help").setView(viewDialog).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Setting").setView(viewDialog);
+                    builder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) { }
-                        TextView TextView=viewDialog.findViewById(R.id.textViewHelp);
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }
                     });
+                    builder.setNegativeButton("OK", null);
+
                     builder.create().show();
                 }
             });
