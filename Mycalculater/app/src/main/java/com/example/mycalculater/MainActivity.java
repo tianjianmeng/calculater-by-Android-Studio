@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
             butEqual.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     s = show2.getText().toString();//获取总运算表达式
                     try{
                         s += "=";
@@ -212,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                         double r = Double.parseDouble(s);
                         r *= r;
                         String ru = "";
-                        ru=String.format("%.12f",r);
+                        ru=String.format("%.10f",r);
                         show2.setText(ru);
                     }catch(Exception e){
                         show2.setText("");
@@ -442,12 +441,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case ')':
                 c = 1;
-                break;
-            case '#':
-                if (b == '#')
-                    c = 0;
-                else
-                    c = -1;
                 break;
         }
         return c;
