@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/text1"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="115dp"
         android:layout_columnSpan="4"
         android:layout_gravity="fill"
         android:gravity="right"
@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="125dp"
         android:layout_columnSpan="4"
         android:layout_gravity="fill"
         android:gravity="right"
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="√x"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/buttonCos"
@@ -110,7 +110,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="x^2"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/buttonSin"
@@ -146,7 +146,7 @@
             android:layout_weight="1"
             android:text="1"
             android:gravity="center"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <Button
             android:id="@+id/buttonTwo"

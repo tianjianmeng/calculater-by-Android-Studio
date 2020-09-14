@@ -2,7 +2,6 @@ package com.example.mycalculater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Stack;
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     //堆栈的设置
     Stack<Double> StackNum = new Stack<Double>();//数栈
-    Stack<Character> StackSym = new Stack<Character>();//符号栈
+    Stack<Character> StackSymbol = new Stack<Character>();//符号栈
     TextView show1, show2;
     String s = "";//总的计算表达式
 
@@ -39,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
                         show1.setText(s);
                         double r = calculate(s);//开始计算
                         String ru = "";
-                        ru=String.format("%.12f",r);
+                        ru=String.format("%.10f",r); //保留10位小数
+                        if(ru.indexOf(".") > 0){ //去0
+                            //正则表达
+                            ru = ru.replaceAll("0+?$", "");//去掉后面无用的零
+                            ru = ru.replaceAll("[.]$", "");//如小数点后面全是零则去掉小数点
+                        }
                         show2.setText(ru);//显示结果
                     }catch(Exception e){
                         show2.setText("");
@@ -252,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                     show2.setText(s + "2.718");
                 }
             });
-            Button butHelp = findViewById(R.id.buttonHelp);//help
+            Button butHelp = findViewById(R.id.buttonHelp);//Setting and help
             butHelp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -269,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     builder.setNegativeButton("OK", null);
-
                     builder.create().show();
                 }
             });
@@ -366,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
         int ct = 0;
         double x = 0, y = 0,number = 0;
         String dp = "";
-        StackSym.push('#');
+        StackSymbol.push('#');
         char c = formula.charAt(ct++);//从运算表达式读入一个字符
         while (c != '=') {//如果不是等于号
             //如果当前字符不是操作运算符，即是数字
@@ -383,17 +385,17 @@ public class MainActivity extends AppCompatActivity {
                 //当前运算符优先级级小于上一个运算符优先级，将当前运算符入栈
                 //当前运算符优先级级等于上一个运算符优先级，即（）那么直接删除）
                 //当前运算符优先级级大于上一个运算符优先级，取得数栈的前两个数，并与当前运算符进行运算，后将结果入数栈
-                switch (Judge(StackSym.peek(), c)) {
+                switch (Judge(StackSymbol.peek(), c)) {
                     case -1:
-                        StackSym.push(c);
+                        StackSymbol.push(c);
                         c = formula.charAt(ct++);
                         break;
                     case 0:
-                        StackSym.pop();
+                        StackSymbol.pop();
                         c = formula.charAt(ct++);
                         break;
                     case 1:
-                        CurrentOperator = StackSym.pop();
+                        CurrentOperator = StackSymbol.pop();
                         y = StackNum.pop();
                         x = StackNum.pop();
                         StackNum.push(Operate(x, y, CurrentOperator));
@@ -402,13 +404,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //如果是=，那么会直接退出，所以还需要进行一次运算，才能得出最后结果
-        CurrentOperator = StackSym.pop();
+        CurrentOperator = StackSymbol.pop();
         y = StackNum.pop();
         x = StackNum.pop();
         StackNum.push(Operate(x, y, CurrentOperator));
         double result = StackNum.peek();
         StackNum.clear();
-        StackSym.clear();
+        StackSymbol.clear();
 
         return result;
     }
