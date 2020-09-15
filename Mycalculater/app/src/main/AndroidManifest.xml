@@ -9,6 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".tiji"></activity>
+        <activity
+            android:name=".changdu"
+            android:label="@string/title_activity_changdu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".jinzhi"
+            android:label="@string/title_activity_jinzhi"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

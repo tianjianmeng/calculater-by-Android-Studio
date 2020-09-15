@@ -1,6 +1,7 @@
 package com.example.mycalculater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     s = show2.getText().toString();//获取总运算表达式
+                    /*s += "=";
+                    show1.setText(s);
+                    double r = calculate(s);//开始计算
+                    String ru = "";
+                    ru=String.format("%.10f",r); //保留10位小数
+                    show2.setText(ru);//显示结果*/
                     try{
                         s += "=";
                         show1.setText(s);
@@ -274,50 +281,30 @@ public class MainActivity extends AppCompatActivity {
                     builder.create().show();
                 }
             });
-        Button butHex = findViewById(R.id.buttonHex);//十六进制
+        Button butHex = findViewById(R.id.buttonHex);//进制转换
         butHex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    s = show2.getText().toString();
-                    show1.setText("HEX(" + s + ")=");
-                    int r = Integer.valueOf(s).intValue();
-                    show2.setText(Integer.toHexString(r));
-                }catch(Exception e){
-                    show2.setText("");
-                    Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(MainActivity.this,jinzhi.class);
+                startActivity(intent);
+
 
             }
         });
-        Button butOct = findViewById(R.id.buttonOct);//八进制
+        Button butOct = findViewById(R.id.buttonOct);//长度转换
         butOct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    s = show2.getText().toString();
-                    show1.setText("OCT(" + s + ")=");
-                    int r = Integer.valueOf(s).intValue();
-                    show2.setText(Integer.toOctalString(r));
-                    }catch(Exception e){
-                        show2.setText("");
-                        Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
-                    }
+                Intent intent = new Intent(MainActivity.this,changdu.class);
+                startActivity(intent);
             }
         });
-        Button butBin = findViewById(R.id.buttonBin);//二进制
+        Button butBin = findViewById(R.id.buttonBin);//体积转换
         butBin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    s = show2.getText().toString();
-                    show1.setText("BIN(" + s + ")=");
-                    int r = Integer.valueOf(s).intValue();
-                    show2.setText(Integer.toBinaryString(r));
-                }catch(Exception e){
-                    show2.setText("");
-                    Toast.makeText(MainActivity.this,"输入错误", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(MainActivity.this,tiji.class);
+                startActivity(intent);
             }
         });
         Button butSin = findViewById(R.id.buttonSin);//sin函数
@@ -441,6 +428,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case ')':
                 c = 1;
+                break;
+            case '#':
+                if (b == '#')
+                    c = 0;
+                else
+                    c = -1;
                 break;
         }
         return c;

@@ -17,7 +17,6 @@
         android:gravity="right"
         android:text=""
         android:textSize="50dp" />
-
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
@@ -40,7 +39,6 @@
             android:text="1"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonTwo"
             android:layout_width="0dp"
@@ -49,7 +47,6 @@
             android:text="2"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonThree"
             android:layout_width="0dp"
@@ -90,7 +87,6 @@
             android:text="("
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonRight"
             android:layout_width="0dp"
@@ -99,7 +95,6 @@
             android:text=")"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonGen"
             android:layout_width="0dp"
@@ -108,7 +103,6 @@
             android:gravity="center"
             android:text="√x"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonCos"
             android:layout_width="0dp"
@@ -134,7 +128,6 @@
             android:text="4"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonFive"
             android:layout_width="0dp"
@@ -222,7 +215,6 @@
             android:text="7"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonEight"
             android:layout_width="0dp"
@@ -231,7 +223,6 @@
             android:text="8"
             android:gravity="center"
             android:textSize="30sp" />
-
         <Button
             android:id="@+id/buttonNine"
             android:layout_width="0dp"
@@ -265,30 +256,29 @@
             android:gravity="center"
             android:textSize="30sp" />
         <Button
-            android:id="@+id/buttonBin"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="binary"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <Button
             android:id="@+id/buttonHex"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Hexadecimal"
             android:gravity="center"
-            android:textSize="13sp" />
+            android:text="进制转换"
+            android:textSize="22sp" />
+        <Button
+            android:id="@+id/buttonBin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="体积转换"
+            android:textSize="22sp" />
         <Button
             android:id="@+id/buttonOct"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Octal"
-            android:textSize="16sp" />
+            android:text="长度转换"
+            android:textSize="22sp" />
         <Button
             android:id="@+id/buttonHelp"
             android:layout_width="0dp"
